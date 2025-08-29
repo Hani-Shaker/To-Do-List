@@ -204,13 +204,13 @@
 
 @media (max-width: 550px) {
     .todo{
-        width: 400px;
-        height: 450px;
+        width: 300px;
+        height: 400px;
     }
     .todo input{
-        width: 350px;
+        width: 270px;
     }
     .todo .list li{
-        width: 350px;
+        width: 270px;
     }
 }
