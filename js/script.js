@@ -90,7 +90,6 @@ document.querySelector(".button").onclick = () => {
     } else {
         addTask()
         totalTasks()
-        over()
     }
 }
 
