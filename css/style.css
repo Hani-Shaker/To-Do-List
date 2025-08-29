@@ -202,15 +202,28 @@
 
 
 
-@media (max-width: 550px) {
+@media (max-width: 350px) {
     .todo{
-        width: 300px;
+        width: 100%;
         height: 400px;
     }
     .todo input{
-        width: 270px;
+        width: 240px;
     }
     .todo .list li{
-        width: 270px;
+        width: 240px;
+    }
+}
+
+@media (max-width: 550px) {
+    .todo{
+        width: 350px;
+        height: 400px;
+    }
+    .todo input{
+        width: 300px;
+    }
+    .todo .list li{
+        width: 300px;
     }
 }
