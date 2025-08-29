@@ -5,14 +5,19 @@
     list-style: none;
     text-decoration: none;
 }
+:root{
+    --bg-web: #f5f7ff;
+    --bg-input: #f5f7ff;
+}
 .cont{
     width: 100%;
     height: 100vh;
-    background-image: url(/images/bg1.jpg);
+    /* background-image: url(/images/bg1.jpg); */
     background-size: cover;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: var(--bg-web);
 }
 
 .todo{
@@ -24,14 +29,20 @@
     position: relative;
     padding: 35px 10px;
     border-radius: 15px;
-    background-color: rgba(80, 65, 243, .3);
-    backdrop-filter: blur(10px);
-    box-shadow: -5px 5px 5px 0 #000;
+    box-shadow: -2px 2px 2px 0 rgb(80, 65, 243);
+    border: 1px solid #000;
+    background: #ffffff;
 }
 .todo h2{
     position: absolute;
-    color: #fff;
+    z-index: 2;
+    color: #1f2937;
+    border: 1px solid #000;
+    border-bottom: 0;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
     top: 0;
+    background: #ffffff;
     left: 50%;
     transform: translate(-50%,-100%);
     width: 170px;
@@ -39,13 +50,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(80, 65, 243, .3);
-    backdrop-filter: blur(10px);
-    clip-path: path("M 160,0 A 5,5 0,0,1 165,5 L 165,55 A 5,5 0,0,0 170,60 L 0,60 A 5,5 0,0,0 5,55 L 5,5 A 5,5 0,0,1 10,0 Z");
 }
 .todo .button{
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     position: absolute;
     text-align: center;
     bottom: 0;
@@ -53,30 +61,38 @@
     transform: translate(-50%,50%);
     border-radius: 50%;
     outline: none;
-    border: 5px solid;
-    font-size: 2em;
+    font-size: 1.7em;
     font-weight: bold;
-    border: 5px solid rgb(27, 27, 29);
-    background-color: rgb(80, 65, 243);
+    border: 2px solid rgb(27, 27, 29);
+    background-color: #6366f1;
     color: #fff;
 }
 .todo .button:hover{
-    box-shadow: 0 0 15px 0 rgb(36, 29, 122) inset;
+    box-shadow: 0 0 15px 0 rgb(43, 36, 124) inset;
+    animation: add .5s both alternate;
+}
+@keyframes add{
+    50%{
+        bottom: 5px;
+    }
+    75%{
+        bottom: -5px;
+    }
+    100%{
+        bottom: 0;
+    }
 }
 
 .todo input{
-    width: 280px;
-    padding: 8px;
+    width: 380px;
+    padding: 15px;
     border-radius: 8px;
     border: none;
     margin-bottom: 20px;
-    background-color: rgb(36, 29, 122);
-    color: #fff;
+    background-color: #f8fafc;
+    /* color: #fff; */
     outline: none;
     box-shadow: -2px 2px 2px 0 rgb(80, 65, 243);
-}
-.todo input::placeholder{
-    color: #fff;
 }
 .todo .list li{
     width: 380px;
@@ -85,17 +101,27 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #333;
-    color: #fff;
+    background-color: #f8fafc;
+    color: #1f2937;
     padding: 8px;
-    background-color: rgba(0, 0, 0, 0.329);
-    backdrop-filter: blur(15px);
-    box-shadow: 0 0 5px 0 #000;
+    transition: .3s;
+    position: relative;
 }
-.task-name{
-    width: 140px;
-    text-transform: capitalize;
+.todo .list li::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -20px;
+    width: 5px;
+    height: 100%;
+    background-color: #10b981;
 }
+
+.todo .list li:hover{
+    transform: translateY(-5px);
+    box-shadow: 0 5px 3px 0 rgba(99, 102, 241, 0.5);
+}
+
 .btns-task button{
     border: 2px solid;
     background-color: transparent;
@@ -107,26 +133,36 @@
     transition: .5s; 
 }
 .btns-task .btn1-task{
-    border-color: green;
-    color: green;
+    border-color: #10b981;
+    color: #10b981;
+    cursor: pointer;
 }
 .btns-task .btn2-task{
-    border-color: red;
-    color: red;
+    border-color: #ef4444;
+    color: #ef4444;
 }
 .btns-task .btn1-task:hover{
-    background-color: green;
+    background-color: #10b981;
     color: #fff;
-    box-shadow: 0 0 5px 0 green;
+    box-shadow: 0 0 5px 0 #10b981;
 }
 .btns-task .btn2-task:hover{
-    background-color: red;
+    background-color: #ef4444;
     color: #fff;
-    box-shadow: 0 0 5px 0 red;
+    box-shadow: 0 0 5px 0 #ef4444;
+}
+  /* لما المهمة متعملها done نخلي الزر أخضر والنص أبيض */
+.btn1-task.done {
+    background-color: #10b981;
+    color: #fff;
+}
+.task-name{
+    max-width: 260px;
+    text-transform: capitalize;
 }
 
-.done{
+.task-name.done{
     text-decoration: line-through;
     text-decoration-color: #000;
-    text-decoration-thickness: 2px;
+    text-decoration-thickness: 3px;
 }
