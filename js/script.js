@@ -1,96 +1,12 @@
-// var data = [];
-// var counter = 0;
-// var taskInput = document.getElementById("taskInput");
-// var list = document.getElementById("taskList");
-
-
-// function addTask() {
-//     var task = taskInput.value;
-//     if (task !== "" && task !== " ") {
-//         data[counter] = {
-//             id: counter,
-//             name: task,
-//             done: false
-//         };
-//         counter++;
-//         taskInput.value = "";
-//         taskData();
-//     }
-// }
-
-
-
-// function taskData() {
-//     list.innerHTML = "";
-//     for (let i = 0; i < data.length; i++) {
-//         if (!data[i]) continue;
-
-//         const li = document.createElement("li");
-//         li.dataset.index = i; // هنستخدمه نعرف رقم المهمة
-//         li.innerHTML = `
-//         <span class="task-name ${data[i].done ? "done" : ""}">${data[i].name}</span>
-//         <div class="btns-task">
-//           <button class="btn1-task"><i class="fas fa-check"></i></button>
-//           <button class="btn2-task"><i class="fas fa-trash"></i></button>
-//         </div>
-//       `;
-//         list.appendChild(li);
-//     }
-// }
-
-// // تفويض أحداث على القائمة كلها
-// list.addEventListener("click", (e) => {
-//     const btn = e.target.closest("button");
-//     if (!btn) return;
-
-//     const li = btn.closest("li");
-//     const i = +li.dataset.index;
-
-//     if (btn.classList.contains("btn1-task")) {
-//         if (btn) {
-//             btn.style.backgroundColor = btn.style.backgroundColor === "green" ? "" : "green";
-//             btn.style.color = btn.style.color === "green" ? "" : "#fff";
-//         }
-//         data[i].done = !data[i].done;
-//         li.querySelector(".task-name").classList.toggle("done");
-//     }
-
-//     if (btn.classList.contains("btn2-task")) {
-//         //   deleteTask(i);
-//         data[i] = undefined; // BAD PRACTICE: Leaves holes in array
-//         taskData();
-//     }
-// });
-
-
-
-// document.getElementById('myForm').addEventListener('submit', function (e) {
-//     e.preventDefault(); // يمنع إعادة التحميل
-//     // حط لوجيكك هنا
-// });
-
-// document.querySelector(".button").onclick = () => {
-//     // console.log("hello"); test
-//     if (taskInput.value == "") {
-//         taskInput.focus()
-//     } else if (taskInput.value !== "") {
-//         addTask()
-//     }
-
-// }
-
-
-
 var data = JSON.parse(localStorage.getItem("tasks")) || [];
-var counter = data.length; // عشان يكمل العد من آخر id
+var counter = data.length;
 var taskInput = document.getElementById("taskInput");
 var list = document.getElementById("taskList");
-
+var tasksTotal = document.getElementById("tasksTotal");
 // تحديث localStorage
 function saveTasks() {
     localStorage.setItem("tasks", JSON.stringify(data));
-}
-
+} 
 function addTask() {
     var task = taskInput.value.trim();
     if (task !== "") {
@@ -103,31 +19,37 @@ function addTask() {
         taskInput.value = "";
         saveTasks(); // حفظ بعد الإضافة
         taskData();
+        totalTasks()
     }
 }
-
-function taskData() {
+function totalTasks() {
+    tasksTotal.innerHTML = `Total: ${counter}`
+    if (counter >= 5 && counter < 10) {
+        tasksTotal.style.backgroundColor = "#e75a5a"
+    }else if(counter >= 10) {
+        tasksTotal.style.backgroundColor = "red"
+    }else{
+        tasksTotal.style.backgroundColor = "#10b981"
+    }
+}
+function taskData() { 
     list.innerHTML = "";
     for (let i = 0; i < data.length; i++) {
         if (!data[i]) continue;
-
         const li = document.createElement("li");
         li.dataset.index = i;
 
-        // error here
-        if (!data[i].done) {
-            li.className = "test"
-        }
-        // اضفنا class "done" للزر لما data[i].done = true
         li.innerHTML = `
-        <span class="task-name ${data[i].done ? "done" : ""}">${data[i].name}</span>
-        <div class="btns-task">
-          <button class="btn1-task ${data[i].done ? "done" : ""}"><i class="fas fa-check"></i></button>
-          <button class="btn2-task"><i class="fas fa-trash"></i></button>
+        <div class="task-cont ${data[i].done ? "done" : ""}">
+            <span class="task-name ${data[i].done ? "done" : ""}">${data[i].name}</span>
+            <div class="btns-task">
+                <button class="btn1-task ${data[i].done ? "done" : ""}"><i class="fas fa-check"></i></button>
+                <button class="btn2-task"><i class="fas fa-trash"></i></button>
+            </div>
         </div>
-      `;
+    `;
         list.appendChild(li);
-
+        // console.log(data); 
     }
 }
 
@@ -148,13 +70,14 @@ list.addEventListener("click", (e) => {
 
     if (btn.classList.contains("btn2-task")) {
         data.splice(i, 1); // حذف فعلي
+        counter -=1;
         saveTasks();
         taskData();
+        totalTasks()
     }
 });
 
 
-// منع الريلود عند السبمت
 document.getElementById('myForm').addEventListener('submit', function (e) {
     e.preventDefault();
 });
@@ -166,8 +89,11 @@ document.querySelector(".button").onclick = () => {
         taskInput.focus()
     } else {
         addTask()
+        totalTasks()
+        over()
     }
 }
 
 // أول ما الصفحة تفتح
 taskData();
+totalTasks()

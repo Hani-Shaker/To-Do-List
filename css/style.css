@@ -22,7 +22,7 @@
 
 .todo{
     width: 450px;
-    min-height: 500px;
+    height: 500px;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -33,6 +33,10 @@
     border: 1px solid #000;
     background: #ffffff;
 }
+/* .list{
+    overflow-y: ;
+} */
+
 .todo h2{
     position: absolute;
     z-index: 2;
@@ -98,23 +102,33 @@
     width: 380px;
     overflow-wrap: break-word;
     margin-top: 15px;
+    background-color: #f8fafc;
+    color: #1f2937;
+    transition: .3s;
+
+}
+.task-cont{
+    padding: 8px;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #f8fafc;
-    color: #1f2937;
-    padding: 8px;
-    transition: .3s;
     position: relative;
 }
-.todo .list li::before{
+.todo .list .task-cont::before{
     content: "";
     position: absolute;
     top: 0;
-    left: -20px;
+    left: 0;
     width: 5px;
     height: 100%;
+    background-color: #6366f1;
+}
+.todo .list .task-cont.done::before{
     background-color: #10b981;
+}
+.list{
+    overflow-y: auto;
 }
 
 .todo .list li:hover{
@@ -165,4 +179,38 @@
     text-decoration: line-through;
     text-decoration-color: #000;
     text-decoration-thickness: 3px;
+}
+
+#tasksTotal{
+    background-color: #10b981;
+    color: #fff;
+    padding: 5px;
+    border-radius: 15px;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 550px) {
+    .todo{
+        width: 400px;
+        height: 450px;
+    }
+    .todo input{
+        width: 350px;
+    }
+    .todo .list li{
+        width: 350px;
+    }
 }
